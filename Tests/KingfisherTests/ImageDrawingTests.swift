@@ -39,6 +39,11 @@ class ImageDrawingTests: XCTestCase {
         XCTAssertEqual(result.size, CGSize(width: 20, height: 20))
     }
     
+    func testImageOffset() {
+        let result = testImage.kf.offsetTo(offset: 0.9)
+        XCTAssertEqual(result.size, CGSize(width: 64.0, height: 64.0))
+    }
+    
     func testImageScaling() {
         XCTAssertEqual(testImage.kf.scale, 1)
         let result = testImage.kf.scaled(to: 2.0)

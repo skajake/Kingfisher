@@ -522,6 +522,29 @@ public enum ContentMode {
     case aspectFill
 }
 
+/// Processor for cropping images based on an offset
+public struct OffsetCropProcessor: ImageProcessor {
+    /// Identifier of the processor.
+    /// - Note: See documentation of `ImageProcessor` protocol for more.
+    public let identifier: String
+    
+    private let offset: CGFloat
+    
+    public init(offset: CGFloat) {
+        self.offset = offset
+        self.identifier = "com.onevcat.Kingfisher.OffsetCropProcessor(\(offset))"
+    }
+    
+    public func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage? {
+        switch item {
+        case .image(let image):
+            return image.kf.offsetTo(offset: offset)
+        case .data:
+            return (DefaultImageProcessor.default |> self).process(item: item, options: options)
+        }
+    }
+}
+
 /// Processor for resizing images.
 /// If you need to resize a data represented image to a smaller size, use `DownsamplingImageProcessor`
 /// instead, which is more efficient and uses less memory.
