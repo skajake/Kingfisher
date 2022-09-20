@@ -96,30 +96,28 @@ extension KingfisherWrapper where Base == CGSize {
             //offset is horizontal
             var width = base.width
             var x = 0.0
-            if offset > 0 {
+            if offset > 0.5 {
                 //offset is to the right
                 width = (1.0 - offset) * 2.0 * base.width
                 x = base.width - width
             } else {
                 //offset is to the left
-                let absOffset = abs(offset)
-                x = absOffset * base.width
-                width = x * 2.0
+                width = abs(offset) * base.width * 2.0
+                x = 0
             }
             return CGRect(x: x, y: 0.0, width: width, height: base.height)
         } else if base.height > base.width {
             //offset is vertical
             var height = base.height
             var y = 0.0
-            if offset > 0 {
-                //offset is to the right
+            if offset > 0.5 {
+                //offset is to the bottom
                 height = (1.0 - offset) * 2.0 * base.height
                 y = base.height - height
             } else {
-                //offset is to the left
-                let absOffset = abs(offset)
-                y = absOffset * base.height
-                height = y * 2.0
+                //offset is to the top
+                height = abs(offset) * base.height * 2.0
+                y = 0
             }
             return CGRect(x: 0.0, y: y, width: base.width, height: height)
         } else {
