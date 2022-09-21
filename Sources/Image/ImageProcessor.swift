@@ -530,17 +530,19 @@ public struct OffsetCropProcessor: ImageProcessor {
     
     private let offset: CGFloat
     private let horizontal: Bool
+    private let viewFrameSize: CGSize
     
-    public init(offset: CGFloat, horizontal: Bool) {
+    public init(offset: CGFloat, horizontal: Bool, viewFrameSize: CGSize) {
         self.offset = offset
         self.horizontal = horizontal
+        self.viewFrameSize = viewFrameSize
         self.identifier = "com.onevcat.Kingfisher.OffsetCropProcessor(\(offset))"
     }
     
     public func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage? {
         switch item {
         case .image(let image):
-            return image.kf.offsetTo(offset: offset, horizontal: horizontal)
+            return image.kf.offsetTo(offset: offset, horizontal: horizontal, viewFrameSize: viewFrameSize)
         case .data:
             return (DefaultImageProcessor.default |> self).process(item: item, options: options)
         }

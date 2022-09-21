@@ -91,7 +91,7 @@ extension KingfisherWrapper where Base == CGSize {
         return ori.intersection(r)
     }
     
-    public func offsetRect(for offset: CGFloat, horizontal: Bool) -> CGRect {
+    public func offsetRect(for offset: CGFloat, horizontal: Bool, viewFrameSize: CGSize) -> CGRect {
         if horizontal {
             //offset is horizontal
             var width = base.width
@@ -100,10 +100,17 @@ extension KingfisherWrapper where Base == CGSize {
                 //offset is to the right
                 width = (1.0 - offset) * 2.0 * base.width
                 x = base.width - width
+                if base.height / width > viewFrameSize.height / viewFrameSize.width {
+                    width = viewFrameSize.width / viewFrameSize.height * base.height
+                    x = base.width - width
+                }
             } else {
                 //offset is to the left
                 width = abs(offset) * base.width * 2.0
                 x = 0
+                if base.height / width > viewFrameSize.height / viewFrameSize.width {
+                    width = viewFrameSize.width / viewFrameSize.height * base.height
+                }
             }
             return CGRect(x: x, y: 0.0, width: width, height: base.height)
         } else  {
@@ -114,10 +121,17 @@ extension KingfisherWrapper where Base == CGSize {
                 //offset is to the bottom
                 height = (1.0 - offset) * 2.0 * base.height
                 y = base.height - height
+                if base.width / height > viewFrameSize.width / viewFrameSize.height {
+                    height = viewFrameSize.height / viewFrameSize.width * base.width
+                    y = base.height - height
+                }
             } else {
                 //offset is to the top
                 height = abs(offset) * base.height * 2.0
                 y = 0
+                if base.width / height > viewFrameSize.width / viewFrameSize.height {
+                    height = viewFrameSize.height / viewFrameSize.width * base.width
+                }
             }
             return CGRect(x: 0.0, y: y, width: base.width, height: height)
         }
