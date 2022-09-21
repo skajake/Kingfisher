@@ -91,8 +91,8 @@ extension KingfisherWrapper where Base == CGSize {
         return ori.intersection(r)
     }
     
-    public func offsetRect(for offset: CGFloat) -> CGRect {
-        if base.width > base.height {
+    public func offsetRect(for offset: CGFloat, horizontal: Bool) -> CGRect {
+        if horizontal {
             //offset is horizontal
             var width = base.width
             var x = 0.0
@@ -106,7 +106,7 @@ extension KingfisherWrapper where Base == CGSize {
                 x = 0
             }
             return CGRect(x: x, y: 0.0, width: width, height: base.height)
-        } else if base.height > base.width {
+        } else  {
             //offset is vertical
             var height = base.height
             var y = 0.0
@@ -120,8 +120,6 @@ extension KingfisherWrapper where Base == CGSize {
                 y = 0
             }
             return CGRect(x: 0.0, y: y, width: base.width, height: height)
-        } else {
-            return CGRect(x: 0, y: 0, width: base.width, height: base.height)
         }
     }
     

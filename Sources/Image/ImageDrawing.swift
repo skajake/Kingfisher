@@ -490,13 +490,13 @@ extension KingfisherWrapper where Base: KFCrossPlatformImage {
         return KingfisherWrapper.image(cgImage: cgImage, scale: scale, refImage: base)
     }
     
-    public func offsetTo(offset: CGFloat) -> KFCrossPlatformImage {
+    public func offsetTo(offset: CGFloat, horizontal: Bool) -> KFCrossPlatformImage {
         guard let cgImage = cgImage else {
             assertionFailure("[Kingfisher] offsetTo only works for CG-based image.")
             return base
         }
         
-        let rect = self.size.kf.offsetRect(for: offset)
+        let rect = self.size.kf.offsetRect(for: offset, horizontal: horizontal)
         guard let image = cgImage.cropping(to: rect.scaled(scale)) else {
             assertionFailure("[Kingfisher] Cropping image failed.")
             return base
